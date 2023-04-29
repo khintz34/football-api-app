@@ -1,5 +1,4 @@
 export async function findTeam(id) {
-  //   const url = `https://api-football-v1.p.rapidapi.com/v1/statistics?league=39&season=2022&team=${id}`;
   const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
 
   const options = {
@@ -16,6 +15,7 @@ export async function findTeam(id) {
     const result = await response.json();
     console.log("findTeam");
     console.log(result);
+    return result;
   } catch (error) {
     console.error(error);
   }

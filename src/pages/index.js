@@ -3,9 +3,13 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import { useEffect, useState } from "react";
 import { findTeam } from "./api/teams";
+import Link from "next/link";
+import { useTeamStore } from "@/stores/teamStore";
 
 export default function Home() {
   const [teamList, setTeamList] = useState([]);
+  const changeId = useTeamStore((state) => state.changeId);
+  const changeTeam = useTeamStore((state) => state.changeTeam);
   async function getData() {
     // const url =
     //   "https://api-football-v1.p.rapidapi.com/v3/players?id=276&season=2020";
@@ -34,7 +38,7 @@ export default function Home() {
   function createTeamList(list) {
     let array = [];
     list.map((val) => {
-      console.log(val.team.name);
+      // console.log(val.team.name);
       array.push({ name: val.team.name, id: val.team.id });
     });
     array.sort();
@@ -54,8 +58,15 @@ export default function Home() {
       <main className={`${styles.main}`}>
         {teamList.map((val, index) => {
           return (
-            <div key={`${val.id}-teamList`} onClick={() => findTeam(val.id)}>
-              {val.name}
+            <div
+              key={`${val.id}-teamList`}
+              onClick={() => {
+                findTeam(val.id);
+                changeId(val.id);
+                changeTeam(val);
+              }}
+            >
+              <Link href={"/TeamPage"}>{val.name}</Link>
             </div>
           );
         })}
