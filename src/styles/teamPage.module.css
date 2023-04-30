@@ -1,0 +1,37 @@
+.teamPage {
+  height: 100vh;
+  width: 100vw;
+  margin-top: 3vh;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+}
+
+.teamLogo {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  height: 20vh;
+  width: 20vh;
+  /* width: auto; */
+}
+
+.buttonList {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.menuBtn {
+  position: absolute;
+  right: -15vw;
+  font-size: 3vh;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  backdrop-filter: blur(10px);
+}

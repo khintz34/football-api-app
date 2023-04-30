@@ -10,6 +10,7 @@ export default function Home() {
   const [teamList, setTeamList] = useState([]);
   const changeId = useTeamStore((state) => state.changeId);
   const changeTeam = useTeamStore((state) => state.changeTeam);
+  const changeFullData = useTeamStore((state) => state.changeFullData);
   async function getData() {
     // const url =
     //   "https://api-football-v1.p.rapidapi.com/v3/players?id=276&season=2020";
@@ -30,6 +31,7 @@ export default function Home() {
       const result = await response.json();
       // console.log(result);
       createTeamList(result.response);
+      changeFullData(result.response);
     } catch (error) {
       console.error(error);
     }
@@ -39,14 +41,15 @@ export default function Home() {
     let array = [];
     list.map((val) => {
       // console.log(val.team.name);
-      array.push({ name: val.team.name, id: val.team.id });
+      array.push(val);
     });
     array.sort();
     setTeamList(array);
+    console.log(array);
   }
 
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
   return (
     <>
@@ -56,17 +59,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className={`${styles.main}`}>
+        <button onClick={getData}>See Teams</button>
         {teamList.map((val, index) => {
           return (
             <div
-              key={`${val.id}-teamList`}
+              key={`${val.team.id}-teamList`}
               onClick={() => {
-                findTeam(val.id);
-                changeId(val.id);
+                // findTeam(val.id);
+                changeId(val.team.id);
                 changeTeam(val);
               }}
             >
-              <Link href={"/TeamPage"}>{val.name}</Link>
+              <Link href={"/TeamPage"}>{val.team.name}</Link>
             </div>
           );
         })}
