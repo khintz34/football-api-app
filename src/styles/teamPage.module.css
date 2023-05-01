@@ -9,7 +9,7 @@
 }
 
 .teamLogo {
-  margin-top: 2vh;
+  margin-top: 10vh;
   margin-bottom: 2vh;
   height: 20vh;
   width: 20vh;
@@ -24,7 +24,7 @@
 
 .menuBtn {
   position: absolute;
-  right: -15vw;
+  right: 5vw;
   font-size: 3vh;
 }
 
@@ -34,4 +34,27 @@
   align-items: center;
   position: fixed;
   backdrop-filter: blur(10px);
+  margin-bottom: 5vh;
+  width: 100vw;
+}
+
+.marginBtn {
+  margin-bottom: 5vh;
+}
+
+.infoDiv {
+  width: 100vw;
+  text-align: center;
+}
+
+.infoH2 {
+  margin-top: 1vh;
+}
+
+.table {
+  width: 90vw;
+  text-align: center;
+  font-size: 2vh;
+  margin-bottom: 5vh;
+  /* margin-left: 10vw; */
 }

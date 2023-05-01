@@ -45,7 +45,7 @@ export default function Home() {
     });
     array.sort();
     setTeamList(array);
-    console.log(array);
+    // console.log(array);
   }
 
   useEffect(() => {

@@ -5,6 +5,8 @@ export const useTeamStore = create((set) => ({
   team: null,
   id: 99,
   info: null,
+  statistics: null,
+  changeStats: (data) => set((state) => ({ statistics: data })),
   changeId: (num) => set((state) => ({ id: num })),
   changeTeam: (data) => set((state) => ({ team: data })),
   changeInfo: (data) => set((state) => ({ info: data })),
