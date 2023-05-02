@@ -18,6 +18,7 @@ function TeamPage() {
   const [totalPoints, setTotalPoints] = useState(0);
   const [position, setPosition] = useState(0);
   const [rankingArray, setRankingArray] = useState([]);
+  const [statStatus, setStatStatus] = useState("styles.hide");
   // console.log(fullData);
   // console.log(teamTeam);
   // need to get team info
@@ -62,6 +63,15 @@ function TeamPage() {
     lookForPos(rankingArray);
   });
 
+  function toggleStatStatus() {
+    console.log(statStatus);
+    if (statStatus === "teamPage_show__Sfksl") {
+      setStatStatus(`${styles.hide}`);
+    } else {
+      setStatStatus(`${styles.show}`);
+    }
+  }
+
   function lookForPos(data) {
     data.map((val) => {
       console.log("val: ", val);
@@ -91,7 +101,6 @@ function TeamPage() {
       />
       <div className={`${styles.marginBtn} ${styles.infoDiv}`}>
         <h2 className={styles.infoH2}>{teamTeam.venue.name}</h2>
-        <h2 className={styles.infoH2}>{teamTeam.venue.address}</h2>
         <h2 className={styles.infoH2}>{teamTeam.venue.city}</h2>
         <h2 className={styles.infoH2}>Founded: {teamTeam.team.founded}</h2>
       </div>
@@ -109,17 +118,17 @@ function TeamPage() {
         <table className={styles.table}>
           <thead>
             {" "}
-            <th>Wins</th>
-            <th>Draws</th>
-            <th>Loses</th>
+            <th style={{ color: "rgb(8, 205, 8)" }}>Wins</th>
+            <th style={{ color: "yellow" }}>Draws</th>
+            <th style={{ color: "red" }}>Loses</th>
             <th>Total Points</th>
             <th>Pos</th>
           </thead>
           <tbody>
             <tr>
-              <td>{wins}</td>
-              <td>{draws}</td>
-              <td>{loses}</td>
+              <td style={{ color: "rgb(8, 205, 8)" }}>{wins}</td>
+              <td style={{ color: "yellow" }}>{draws}</td>
+              <td style={{ color: "red" }}>{loses}</td>
               <td>{totalPoints}</td>
               <td>{position}</td>
             </tr>
@@ -129,7 +138,15 @@ function TeamPage() {
       <div className={`${styles.buttonListContainer}`}>
         <h3>See More</h3>
         <div className={`${styles.buttonList}`}>
-          <button className={styles.moreBtn}>Stats</button>
+          <button
+            className={styles.moreBtn}
+            onClick={() => {
+              setStatStatus(`${styles.show}`);
+              toggleStatStatus();
+            }}
+          >
+            Stats
+          </button>
           <button className={styles.moreBtn}>Fixture List</button>
           <button className={styles.moreBtn}>Standings</button>
           <button className={styles.moreBtn}>Roster</button>
@@ -137,6 +154,7 @@ function TeamPage() {
           <button className={styles.moreBtn}>Coaches</button>
         </div>
       </div>
+      <div className={`${styles.statBox} ${statStatus}`}></div>
     </div>
   );
 }
