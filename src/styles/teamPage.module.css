@@ -58,3 +58,25 @@
   margin-bottom: 5vh;
   /* margin-left: 10vw; */
 }
+
+.buttonListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+}
+
+.buttonList {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.moreBtn {
+  width: 40vw;
+  height: 5vh;
+}

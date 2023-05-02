@@ -126,15 +126,16 @@ function TeamPage() {
           </tbody>
         </table>
       </div>
-
-      <div className={`${styles.buttonList}`}>
-        <h3>Team Info</h3>
-        <button>Stats</button>
-        <button>Fixture List</button>
-        <button>Standings</button>
-        <button>Roster</button>
-        <button>Transfers</button>
-        <button>Coaches</button>
+      <div className={`${styles.buttonListContainer}`}>
+        <h3>See More</h3>
+        <div className={`${styles.buttonList}`}>
+          <button className={styles.moreBtn}>Stats</button>
+          <button className={styles.moreBtn}>Fixture List</button>
+          <button className={styles.moreBtn}>Standings</button>
+          <button className={styles.moreBtn}>Roster</button>
+          <button className={styles.moreBtn}>Transfers</button>
+          <button className={styles.moreBtn}>Coaches</button>
+        </div>
       </div>
     </div>
   );
