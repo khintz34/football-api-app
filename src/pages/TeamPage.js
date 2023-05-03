@@ -24,6 +24,10 @@ function TeamPage() {
   const [yellowCards, setYellowCards] = useState(0);
   const [redCards, setRedCards] = useState(0);
   const [currentForm, setCurrentForm] = useState(null);
+  const [againstLeast, setAgainstLeast] = useState({});
+  const [againstMost, setAgainstMost] = useState({});
+  const [forLeast, setForLeast] = useState({});
+  const [forMost, setForMost] = useState({});
 
   function calcCards(data) {
     let yellow = 0;
@@ -43,6 +47,38 @@ function TeamPage() {
     let formHold = teamStats.form;
     console.log(formHold);
     setCurrentForm(formHold.substring(0, 5));
+  }
+
+  function calcGoals(data) {
+    //calc away goals against
+    let againstArray = Object.entries(data.against.minute);
+    let againstMostHold = againstArray[0];
+    let againstLeastHold = againstArray[0];
+
+    for (let i = 0; i < 6; i++) {
+      if (againstArray[i][1].total < againstLeastHold[1].total) {
+        againstLeastHold = againstArray[i];
+      } else if (againstArray[i][1].total > againstMostHold[1].total) {
+        againstMostHold = againstArray[i];
+      }
+    }
+    setAgainstLeast(againstLeastHold);
+    setAgainstMost(againstMostHold);
+
+    //calc home goals against
+    let forArray = Object.entries(data.for.minute);
+    let forMostHold = forArray[0];
+    let forLeastHold = forArray[0];
+
+    for (let i = 0; i < 6; i++) {
+      if (forArray[i][1].total < forLeastHold[1].total) {
+        forLeastHold = forArray[i];
+      } else if (forArray[i][1].total > forMostHold[1].total) {
+        forMostHold = forArray[i];
+      }
+    }
+    setForLeast(forLeastHold);
+    setForMost(forMostHold);
   }
 
   async function fetchData(id, option) {
@@ -82,6 +118,7 @@ function TeamPage() {
         changeTeamStats(result.response);
         console.log(result.response);
         calcCards(result.response.cards);
+        calcGoals(result.response.goals);
         return result;
       } catch (error) {
         console.error(error);
@@ -194,6 +231,41 @@ function TeamPage() {
         </div>
         <div>Form: {currentForm}</div>
         <div>Most Common Formation: {teamStats.lineups[0].formation}</div>
+        <div>
+          Penalty Miss: {teamStats.penalty.missed.percentage}(
+          {teamStats.penalty.missed.total})
+        </div>
+        <div>
+          Penalty Scored: {teamStats.penalty.scored.percentage}(
+          {teamStats.penalty.scored.total})
+        </div>
+        <div>
+          <h3>Defence</h3>
+          <div>
+            Goals Allowed:
+            {teamStats.goals.against.total.away} (A){""}
+            {teamStats.goals.against.total.home}(H)
+            {teamStats.goals.against.total.total} (Total)
+          </div>
+          <div>
+            Most Likely Time To Give Up A Goal:
+            {againstMost[0]} : {againstMost[1].total} (
+            {againstMost[1].percentage})
+          </div>
+          <div>
+            Least Likely Time To Give Up A Goal:
+            {againstLeast[0]} : {againstLeast[1].total} (
+            {againstLeast[1].percentage})
+          </div>
+          <div>
+            Most Likely Time To Score A Goal:
+            {forMost[0]} : {forMost[1].total} ({forMost[1].percentage})
+          </div>
+          <div>
+            Least Likely Time To Score A Goal:
+            {forLeast[0]} : {forLeast[1].total} ({forLeast[1].percentage})
+          </div>
+        </div>
       </div>
     </div>
   );
