@@ -12,6 +12,8 @@ function TeamPage() {
   const fullData = useTeamStore((state) => state.fullData);
   const stats = useTeamStore((state) => state.statistics);
   const changeStats = useTeamStore((state) => state.changeStats);
+  const changeTeamStats = useTeamStore((state) => state.changeTeamStats);
+  const teamStats = useTeamStore((state) => state.teamStats);
   const [wins, setWins] = useState(0);
   const [draws, setDraws] = useState(0);
   const [loses, setLoses] = useState(0);
@@ -19,16 +21,34 @@ function TeamPage() {
   const [position, setPosition] = useState(0);
   const [rankingArray, setRankingArray] = useState([]);
   const [statStatus, setStatStatus] = useState("styles.hide");
-  // console.log(fullData);
-  // console.log(teamTeam);
-  // need to get team info
+  const [yellowCards, setYellowCards] = useState(0);
+  const [redCards, setRedCards] = useState(0);
+  const [currentForm, setCurrentForm] = useState(null);
 
-  // console.log(teamTeam);
-  // console.log(stats);
+  function calcCards(data) {
+    let yellow = 0;
+    const yellowArray = Object.entries(data.yellow);
+    yellowArray.map((val) => {
+      yellow += val[1].total;
+    });
+    setYellowCards(yellow);
 
-  async function findTeam(id) {
+    let red = 0;
+    const redArray = Object.entries(data.red);
+    redArray.map((val) => {
+      red += val[1].total;
+    });
+    setRedCards(red);
+
+    let formHold = teamStats.form;
+    console.log(formHold);
+    setCurrentForm(formHold.substring(0, 5));
+  }
+
+  async function fetchData(id, option) {
     const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
     const url2 = `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${id}`;
+    const url3 = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
 
     const options = {
       method: "GET",
@@ -39,23 +59,33 @@ function TeamPage() {
       },
     };
 
-    try {
-      const response = await fetch(url, options);
-      const response2 = await fetch(url2, options);
-      const result = await response.json();
-      const result2 = await response2.json();
-      // console.log("findTeam");
-      // console.log(result.response);
-      changeStats(result.response);
-      setWins(result.response.fixtures.wins.total);
-      setDraws(result.response.fixtures.draws.total);
-      setLoses(result.response.fixtures.loses.total);
-      setRankingArray(result2.response);
-      lookForPos(result2.response);
-      // console.log(result2.response);
-      return result;
-    } catch (error) {
-      console.error(error);
+    if (option === 1) {
+      try {
+        const response = await fetch(url, options);
+        const response2 = await fetch(url2, options);
+        const result = await response.json();
+        const result2 = await response2.json();
+        changeStats(result.response);
+        setWins(result.response.fixtures.wins.total);
+        setDraws(result.response.fixtures.draws.total);
+        setLoses(result.response.fixtures.loses.total);
+        setRankingArray(result2.response);
+        lookForPos(result2.response);
+        return result;
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        const response = await fetch(url3, options);
+        const result = await response.json();
+        changeTeamStats(result.response);
+        console.log(result.response);
+        calcCards(result.response.cards);
+        return result;
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -74,10 +104,8 @@ function TeamPage() {
 
   function lookForPos(data) {
     data.map((val) => {
-      console.log("val: ", val);
       if (val.league.name === "Premier League") {
         setPosition(val.league.standings[0][0].rank);
-        console.log(val.league.standings[0][0].rank, "RANK");
       }
     });
   }
@@ -108,7 +136,7 @@ function TeamPage() {
       <div>
         <button
           onClick={() => {
-            findTeam(teamId);
+            fetchData(teamId, 1);
             // findStandings();
           }}
           style={{ width: "50vw", height: "5vh" }}
@@ -143,6 +171,7 @@ function TeamPage() {
             onClick={() => {
               setStatStatus(`${styles.show}`);
               toggleStatStatus();
+              fetchData(teamId, 2);
             }}
           >
             Stats
@@ -154,7 +183,18 @@ function TeamPage() {
           <button className={styles.moreBtn}>Coaches</button>
         </div>
       </div>
-      <div className={`${styles.statBox} ${statStatus}`}></div>
+      <div className={`${styles.statBox} ${statStatus}`}>
+        <div>Yellow Cards: {yellowCards}</div>
+        <div>Red Cards: {redCards}</div>
+        <div>Clean Sheets: {teamStats.clean_sheet.total}</div>
+        <div>
+          Failed to Score: {teamStats.failed_to_score.away} (A){""}
+          {teamStats.failed_to_score.home} (H)
+          {teamStats.failed_to_score.total} (Total)
+        </div>
+        <div>Form: {currentForm}</div>
+        <div>Most Common Formation: {teamStats.lineups[0].formation}</div>
+      </div>
     </div>
   );
 }
