@@ -27,7 +27,7 @@ function StatsTeam(props) {
 
   async function findStats(id, season) {
     console.log("Season: ", season);
-    const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
+    const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=${season}&team=${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -40,15 +40,15 @@ function StatsTeam(props) {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      changeTeamStats(result.response);
+      const teamStatsAwait = await changeTeamStats(result.response);
       console.log(result.response);
       calcCards(result.response.cards);
       calcGoals(result.response.goals);
-      setCleanSheets(result.response.clean_sheet.total);
+      await setCleanSheets(result.response.clean_sheet.total);
       setStatsFound(true);
-      setFailedToScoreAway(result.response.failed_to_score.away);
-      setFailedToScoreHome(result.response.failed_to_score.home);
-      setFormation(result.response.lineups[0].formation);
+      await setFailedToScoreAway(result.response.failed_to_score.away);
+      await setFailedToScoreHome(result.response.failed_to_score.home);
+      await setFormation(result.response.lineups[0].formation);
       return result;
     } catch (error) {
       console.error(error);
