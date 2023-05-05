@@ -5,6 +5,7 @@ import styles from "../styles/teamPage.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Header from "@/components/header";
 import { findLeague, findStandings } from "./api/teams";
+import StatsTeam from "@/components/StatsTeam";
 
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
@@ -28,6 +29,7 @@ function TeamPage() {
   const [againstMost, setAgainstMost] = useState({});
   const [forLeast, setForLeast] = useState({});
   const [forMost, setForMost] = useState({});
+  const [displayStat, setDisplayStat] = useState(null);
 
   function calcCards(data) {
     let yellow = 0;
@@ -139,6 +141,14 @@ function TeamPage() {
     }
   }
 
+  function toggleDisplayStat(val) {
+    if (val === displayStat) {
+      setDisplayStat(null);
+    } else {
+      setDisplayStat(val);
+    }
+  }
+
   function lookForPos(data) {
     data.map((val) => {
       if (val.league.name === "Premier League") {
@@ -182,7 +192,6 @@ function TeamPage() {
         </button>
         <table className={styles.table}>
           <thead>
-            {" "}
             <th style={{ color: "rgb(8, 205, 8)" }}>Wins</th>
             <th style={{ color: "yellow" }}>Draws</th>
             <th style={{ color: "red" }}>Loses</th>
@@ -206,9 +215,10 @@ function TeamPage() {
           <button
             className={styles.moreBtn}
             onClick={() => {
+              // fetchData(teamId, 2);
               setStatStatus(`${styles.show}`);
               toggleStatStatus();
-              fetchData(teamId, 2);
+              toggleDisplayStat("StatsTeam");
             }}
           >
             Stats
@@ -219,52 +229,14 @@ function TeamPage() {
           <button className={styles.moreBtn}>Transfers</button>
           <button className={styles.moreBtn}>Coaches</button>
         </div>
-      </div>
-      <div className={`${styles.statBox} ${statStatus}`}>
-        <div>Yellow Cards: {yellowCards}</div>
-        <div>Red Cards: {redCards}</div>
-        <div>Clean Sheets: {teamStats.clean_sheet.total}</div>
-        <div>
-          Failed to Score: {teamStats.failed_to_score.away} (A){""}
-          {teamStats.failed_to_score.home} (H)
-          {teamStats.failed_to_score.total} (Total)
-        </div>
-        <div>Form: {currentForm}</div>
-        <div>Most Common Formation: {teamStats.lineups[0].formation}</div>
-        <div>
-          Penalty Miss: {teamStats.penalty.missed.percentage}(
-          {teamStats.penalty.missed.total})
-        </div>
-        <div>
-          Penalty Scored: {teamStats.penalty.scored.percentage}(
-          {teamStats.penalty.scored.total})
-        </div>
-        <div>
-          <h3>Defence</h3>
-          <div>
-            Goals Allowed:
-            {teamStats.goals.against.total.away} (A){""}
-            {teamStats.goals.against.total.home}(H)
-            {teamStats.goals.against.total.total} (Total)
-          </div>
-          <div>
-            Most Likely Time To Give Up A Goal:
-            {againstMost[0]} : {againstMost[1].total} (
-            {againstMost[1].percentage})
-          </div>
-          <div>
-            Least Likely Time To Give Up A Goal:
-            {againstLeast[0]} : {againstLeast[1].total} (
-            {againstLeast[1].percentage})
-          </div>
-          <div>
-            Most Likely Time To Score A Goal:
-            {forMost[0]} : {forMost[1].total} ({forMost[1].percentage})
-          </div>
-          <div>
-            Least Likely Time To Score A Goal:
-            {forLeast[0]} : {forLeast[1].total} ({forLeast[1].percentage})
-          </div>
+        <div className={`${styles.statBox} ${statStatus}`}>
+          {displayStat === null ? (
+            ""
+          ) : displayStat === "StatsTeam" ? (
+            <StatsTeam />
+          ) : (
+            "ERROR"
+          )}
         </div>
       </div>
     </div>

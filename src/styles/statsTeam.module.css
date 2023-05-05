@@ -1,0 +1,97 @@
+.teamPage {
+  min-height: 100vh;
+  width: 100vw;
+  margin-top: 3vh;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+}
+
+.teamLogo {
+  margin-top: 10vh;
+  margin-bottom: 2vh;
+  height: 20vh;
+  width: 20vh;
+  /* width: auto; */
+}
+
+.buttonList {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.menuBtn {
+  position: absolute;
+  right: 5vw;
+  font-size: 3vh;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  backdrop-filter: blur(10px);
+  margin-bottom: 5vh;
+  width: 100vw;
+}
+
+.marginBtn {
+  margin-bottom: 5vh;
+}
+
+.infoDiv {
+  width: 100vw;
+  text-align: center;
+}
+
+.infoH2 {
+  margin-top: 1vh;
+}
+
+.table {
+  width: 90vw;
+  text-align: center;
+  font-size: 2vh;
+  margin-bottom: 5vh;
+  /* margin-left: 10vw; */
+}
+
+.buttonListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+}
+
+.buttonList {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.moreBtn {
+  width: 40vw;
+  height: 5vh;
+}
+
+.statBox {
+  margin-top: 5vh;
+  width: 100vw;
+  border: 2px solid white;
+  transition: height 1s ease;
+}
+
+.hide {
+  height: 0vh;
+}
+
+.show {
+  height: 50vh;
+}
