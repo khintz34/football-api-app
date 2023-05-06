@@ -1,13 +1,3 @@
-.teamPage {
-  min-height: 100vh;
-  width: 100vw;
-  margin-top: 3vh;
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  flex-direction: column;
-}
-
 .teamLogo {
   margin-top: 10vh;
   margin-bottom: 2vh;
@@ -84,14 +74,6 @@
 .statBox {
   margin-top: 5vh;
   width: 100vw;
-  border: 2px solid white;
+  /* border: 2px solid white; */
   transition: height 1s ease;
-}
-
-.hide {
-  height: 0vh;
-}
-
-.show {
-  height: 50vh;
 }

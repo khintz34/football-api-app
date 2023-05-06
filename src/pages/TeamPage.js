@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import Header from "@/components/header";
 import { findLeague, findStandings } from "./api/teams";
 import StatsTeam from "@/components/StatsTeam";
+import FixtureList from "@/components/FixtureList";
 
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
@@ -22,13 +23,6 @@ function TeamPage() {
   const [position, setPosition] = useState(0);
   const [rankingArray, setRankingArray] = useState([]);
   const [statStatus, setStatStatus] = useState("styles.hide");
-  const [yellowCards, setYellowCards] = useState(0);
-  const [redCards, setRedCards] = useState(0);
-  const [currentForm, setCurrentForm] = useState(null);
-  const [againstLeast, setAgainstLeast] = useState({});
-  const [againstMost, setAgainstMost] = useState({});
-  const [forLeast, setForLeast] = useState({});
-  const [forMost, setForMost] = useState({});
   const [displayStat, setDisplayStat] = useState(null);
 
   function calcCards(data) {
@@ -86,7 +80,6 @@ function TeamPage() {
   async function fetchData(id, option) {
     const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
     const url2 = `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${id}`;
-    const url3 = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
 
     const options = {
       method: "GET",
@@ -96,35 +89,20 @@ function TeamPage() {
         "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
       },
     };
-
-    if (option === 1) {
-      try {
-        const response = await fetch(url, options);
-        const response2 = await fetch(url2, options);
-        const result = await response.json();
-        const result2 = await response2.json();
-        changeStats(result.response);
-        setWins(result.response.fixtures.wins.total);
-        setDraws(result.response.fixtures.draws.total);
-        setLoses(result.response.fixtures.loses.total);
-        setRankingArray(result2.response);
-        lookForPos(result2.response);
-        return result;
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      try {
-        const response = await fetch(url3, options);
-        const result = await response.json();
-        changeTeamStats(result.response);
-        console.log(result.response);
-        calcCards(result.response.cards);
-        calcGoals(result.response.goals);
-        return result;
-      } catch (error) {
-        console.error(error);
-      }
+    try {
+      const response = await fetch(url, options);
+      const response2 = await fetch(url2, options);
+      const result = await response.json();
+      const result2 = await response2.json();
+      changeStats(result.response);
+      setWins(result.response.fixtures.wins.total);
+      setDraws(result.response.fixtures.draws.total);
+      setLoses(result.response.fixtures.loses.total);
+      setRankingArray(result2.response);
+      lookForPos(result2.response);
+      return result;
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -133,7 +111,6 @@ function TeamPage() {
   });
 
   function toggleStatStatus() {
-    console.log(statStatus);
     if (statStatus === "teamPage_show__Sfksl") {
       setStatStatus(`${styles.hide}`);
     } else {
@@ -142,6 +119,7 @@ function TeamPage() {
   }
 
   function toggleDisplayStat(val) {
+    console.log(val);
     if (val === displayStat) {
       setDisplayStat(null);
     } else {
@@ -215,7 +193,6 @@ function TeamPage() {
           <button
             className={styles.moreBtn}
             onClick={() => {
-              // fetchData(teamId, 2);
               setStatStatus(`${styles.show}`);
               toggleStatStatus();
               toggleDisplayStat("StatsTeam");
@@ -223,7 +200,16 @@ function TeamPage() {
           >
             Stats
           </button>
-          <button className={styles.moreBtn}>Fixture List</button>
+          <button
+            className={styles.moreBtn}
+            onClick={() => {
+              setStatStatus(`${styles.show}`);
+              toggleStatStatus();
+              toggleDisplayStat("FixtureList");
+            }}
+          >
+            Fixture List
+          </button>
           <button className={styles.moreBtn}>Standings</button>
           <button className={styles.moreBtn}>Roster</button>
           <button className={styles.moreBtn}>Transfers</button>
@@ -234,6 +220,8 @@ function TeamPage() {
             ""
           ) : displayStat === "StatsTeam" ? (
             <StatsTeam />
+          ) : displayStat === "FixtureList" ? (
+            <FixtureList />
           ) : (
             "ERROR"
           )}

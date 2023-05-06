@@ -7,7 +7,7 @@ function StatsTeam(props) {
   const [redCards, setRedCards] = useState(0);
   const [currentForm, setCurrentForm] = useState("");
   const [againstLeast, setAgainstLeast] = useState([
-    "placeholder",
+    0,
     { total: 0, percentage: 0 },
   ]);
   const [againstMost, setAgainstMost] = useState([
@@ -130,7 +130,7 @@ function StatsTeam(props) {
   }, []);
 
   return (
-    <div className={`${styles.statBox} ${statStatus}`}>
+    <div className={`${styles.statBox}`}>
       <div>Yellow Cards: {yellowCards}</div>
       <div>Red Cards: {redCards}</div>
       <div>Clean Sheets: {cleanSheets}</div>
