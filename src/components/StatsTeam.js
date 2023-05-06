@@ -10,9 +10,12 @@ function StatsTeam(props) {
     "placeholder",
     { total: 0, percentage: 0 },
   ]);
-  const [againstMost, setAgainstMost] = useState({});
-  const [forLeast, setForLeast] = useState({});
-  const [forMost, setForMost] = useState({});
+  const [againstMost, setAgainstMost] = useState([
+    0,
+    { total: 0, percentage: 0 },
+  ]);
+  const [forLeast, setForLeast] = useState([0, { total: 0, percentage: 0 }]);
+  const [forMost, setForMost] = useState([0, { total: 0, percentage: 0 }]);
   const changeTeamStats = useTeamStore((state) => state.changeTeamStats);
   const teamId = useTeamStore((state) => state.id);
   const [statStatus, setStatStatus] = useState("styles.hide");
@@ -22,11 +25,20 @@ function StatsTeam(props) {
   const [failedToScoreAway, setFailedToScoreAway] = useState(0);
   const [failedToScoreHome, setFailedToScoreHome] = useState(0);
   const [formation, setFormation] = useState("");
-  const [penaltyMiss, setPenaltyMiss] = useState(0);
-  const [penaltyMake, setPenaltyMake] = useState(0);
+  const [penaltyMiss, setPenaltyMiss] = useState({ percentage: 0, total: 0 });
+  const [penaltyMake, setPenaltyMake] = useState({ percentage: 0, total: 0 });
+  const [goalsAgainst, setGoalsAgainst] = useState({
+    away: 0,
+    home: 0,
+    total: 0,
+  });
+  const [goalsFor, setGoalsFor] = useState({
+    away: 0,
+    home: 0,
+    total: 0,
+  });
 
   async function findStats(id, season) {
-    console.log("Season: ", season);
     const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=${season}&team=${id}`;
     const options = {
       method: "GET",
@@ -44,11 +56,15 @@ function StatsTeam(props) {
       console.log(result.response);
       calcCards(result.response.cards);
       calcGoals(result.response.goals);
-      await setCleanSheets(result.response.clean_sheet.total);
+      setCleanSheets(result.response.clean_sheet.total);
       setStatsFound(true);
-      await setFailedToScoreAway(result.response.failed_to_score.away);
-      await setFailedToScoreHome(result.response.failed_to_score.home);
-      await setFormation(result.response.lineups[0].formation);
+      setFailedToScoreAway(result.response.failed_to_score.away);
+      setFailedToScoreHome(result.response.failed_to_score.home);
+      setFormation(result.response.lineups[0].formation);
+      setPenaltyMake(result.response.penalty.scored);
+      setPenaltyMiss(result.response.penalty.missed);
+      setGoalsAgainst(result.response.goals.against.total);
+      setGoalsFor(result.response.goals.for.total);
       return result;
     } catch (error) {
       console.error(error);
@@ -115,7 +131,6 @@ function StatsTeam(props) {
 
   return (
     <div className={`${styles.statBox} ${statStatus}`}>
-      test
       <div>Yellow Cards: {yellowCards}</div>
       <div>Red Cards: {redCards}</div>
       <div>Clean Sheets: {cleanSheets}</div>
@@ -127,20 +142,18 @@ function StatsTeam(props) {
       <div>Form: {currentForm}</div>
       <div>Most Common Formation: {formation}</div>
       <div>
-        Penalty Miss: {teamStats.penalty.missed.percentage}(
-        {teamStats.penalty.missed.total})
+        Penalty Miss: {penaltyMiss.percentage}({penaltyMiss.total})
       </div>
       <div>
-        Penalty Scored: {teamStats.penalty.scored.percentage}(
-        {teamStats.penalty.scored.total})
+        Penalty Scored: {penaltyMake.percentage}({penaltyMake.total})
       </div>
-      {/* <div>
+      <div>
         <h3>Defence</h3>
         <div>
           Goals Allowed:
-          {teamStats.goals.against.total.away} (A){""}
-          {teamStats.goals.against.total.home}(H)
-          {teamStats.goals.against.total.total} (Total)
+          {goalsAgainst.away} (A){""}
+          {goalsAgainst.home}(H)
+          {goalsAgainst.total} (Total)
         </div>
         <div>
           Most Likely Time To Give Up A Goal:
@@ -153,14 +166,24 @@ function StatsTeam(props) {
           {againstLeast[1].percentage})
         </div>
         <div>
-          Most Likely Time To Score A Goal:
-          {forMost[0]} : {forMost[1].total} ({forMost[1].percentage})
+          <h3>Offense</h3>
+          <div>
+            Goals Allowed:
+            {goalsFor.away} (A){""}
+            {goalsFor.home}(H)
+            {goalsFor.total} (Total)
+          </div>
+          <div>
+            Most Likely Time To Score A Goal:
+            {forMost[0]} : {forMost[1].total} ({forMost[1].percentage})
+          </div>
+
+          <div>
+            Least Likely Time To Score A Goal:
+            {forLeast[0]} : {forLeast[1].total} ({forLeast[1].percentage})
+          </div>
         </div>
-        <div>
-          Least Likely Time To Score A Goal:
-          {forLeast[0]} : {forLeast[1].total} ({forLeast[1].percentage})
-        </div>
-      </div> */}
+      </div>
     </div>
   );
 }
