@@ -85,13 +85,15 @@
   margin-top: 5vh;
   width: 100vw;
   border: 2px solid white;
-  transition: height 1s ease;
+  /* max-height: 0px; */
+  transition: max-height 3s ease;
 }
 
 .hide {
-  height: 0vh;
+  max-height: 0vh;
 }
 
 .show {
-  height: 50vh;
+  max-height: 500vh;
+  /* height: auto; */
 }

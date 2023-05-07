@@ -6,9 +6,11 @@ function FixtureList() {
   const teamId = useTeamStore((state) => state.id);
   const [fixtureList, setFixtureList] = useState([
     {
+      goals: { home: 0, away: 0 },
+
       teams: {
-        home: "Team",
-        away: "Team2",
+        home: { name: "teamName", logo: "" },
+        away: { name: "teamName2", logo: "" },
       },
     },
   ]);
@@ -33,13 +35,50 @@ function FixtureList() {
   }
 
   useEffect(() => {
+    console.log(fixtureList);
+  }, [fixtureList]);
+
+  useEffect(() => {
     fetchData(teamId, 2022);
-  });
+  }, []);
 
   return (
     <div>
-      {fixtureList.map((val) => {
-        <p>{val.teams.home.name}</p>;
+      {fixtureList.map((val, index) => {
+        return (
+          <div
+            key={`${val.teams.home.name}-${teamId}-${index}`}
+            className={styles.fixtureContainer}
+          >
+            <img src={val.teams.home.logo} alt="" className={styles.logo} />
+            <p>{val.teams.home.name}</p>
+            <p
+              className={
+                val.teams.home.winner
+                  ? styles.winner
+                  : val.teams.home.winner === null
+                  ? styles.draw
+                  : styles.loser
+              }
+            >
+              {val.goals.home}
+            </p>
+            <p> - </p>
+            <p
+              className={
+                val.teams.home.winner
+                  ? styles.winner
+                  : val.teams.home.winner === null
+                  ? styles.draw
+                  : styles.loser
+              }
+            >
+              {val.goals.away}
+            </p>
+            <p>{val.teams.away.name}</p>
+            <img src={val.teams.away.logo} alt="" className={styles.logo} />
+          </div>
+        );
       })}
     </div>
   );

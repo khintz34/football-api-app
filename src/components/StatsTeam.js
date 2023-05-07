@@ -87,7 +87,6 @@ function StatsTeam(props) {
     setRedCards(red);
 
     let formHold = teamStats.form;
-    console.log(formHold);
     setCurrentForm(formHold.substring(0, 5));
   }
 

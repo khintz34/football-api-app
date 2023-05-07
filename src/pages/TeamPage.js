@@ -122,8 +122,10 @@ function TeamPage() {
     console.log(val);
     if (val === displayStat) {
       setDisplayStat(null);
+      setStatStatus(`${styles.hide}`);
     } else {
       setDisplayStat(val);
+      setStatStatus(`${styles.show}`);
     }
   }
 
@@ -194,7 +196,7 @@ function TeamPage() {
             className={styles.moreBtn}
             onClick={() => {
               setStatStatus(`${styles.show}`);
-              toggleStatStatus();
+              // toggleStatStatus();
               toggleDisplayStat("StatsTeam");
             }}
           >
@@ -204,7 +206,7 @@ function TeamPage() {
             className={styles.moreBtn}
             onClick={() => {
               setStatStatus(`${styles.show}`);
-              toggleStatStatus();
+              // toggleStatStatus();
               toggleDisplayStat("FixtureList");
             }}
           >
