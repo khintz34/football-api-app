@@ -29,18 +29,11 @@ function Standings() {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      console.log(result.response[0].league.standings);
-      console.log(result.response[0].league.standings[0]);
       setStandings(result.response[0].league.standings[0]);
     } catch (error) {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    console.log("standigns useeffect");
-    console.log(standings);
-  }, [standings]);
 
   useEffect(() => {
     fetchData(2022);
@@ -60,7 +53,6 @@ function Standings() {
         </thead>
         <tbody>
           {standings.map((val, index) => {
-            console.log(val);
             return (
               <tr key={`${val.team.name}-standings-tr`}>
                 <td>{val.rank}</td>
