@@ -7,6 +7,7 @@ import Header from "@/components/header";
 import { findLeague, findStandings } from "./api/teams";
 import StatsTeam from "@/components/StatsTeam";
 import FixtureList from "@/components/FixtureList";
+import Standings from "@/components/Standings";
 
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
@@ -172,11 +173,13 @@ function TeamPage() {
         </button>
         <table className={styles.table}>
           <thead>
-            <th style={{ color: "rgb(8, 205, 8)" }}>Wins</th>
-            <th style={{ color: "yellow" }}>Draws</th>
-            <th style={{ color: "red" }}>Loses</th>
-            <th>Total Points</th>
-            <th>Pos</th>
+            <tr>
+              <th style={{ color: "rgb(8, 205, 8)" }}>Wins</th>
+              <th style={{ color: "yellow" }}>Draws</th>
+              <th style={{ color: "red" }}>Loses</th>
+              <th>Total Points</th>
+              <th>Pos</th>
+            </tr>
           </thead>
           <tbody>
             <tr>
@@ -196,7 +199,6 @@ function TeamPage() {
             className={styles.moreBtn}
             onClick={() => {
               setStatStatus(`${styles.show}`);
-              // toggleStatStatus();
               toggleDisplayStat("StatsTeam");
             }}
           >
@@ -206,13 +208,20 @@ function TeamPage() {
             className={styles.moreBtn}
             onClick={() => {
               setStatStatus(`${styles.show}`);
-              // toggleStatStatus();
               toggleDisplayStat("FixtureList");
             }}
           >
             Fixture List
           </button>
-          <button className={styles.moreBtn}>Standings</button>
+          <button
+            className={styles.moreBtn}
+            onClick={() => {
+              setStatStatus(`${styles.show}`);
+              toggleDisplayStat("Standings");
+            }}
+          >
+            Standings
+          </button>
           <button className={styles.moreBtn}>Roster</button>
           <button className={styles.moreBtn}>Transfers</button>
           <button className={styles.moreBtn}>Coaches</button>
@@ -224,6 +233,8 @@ function TeamPage() {
             <StatsTeam />
           ) : displayStat === "FixtureList" ? (
             <FixtureList />
+          ) : displayStat === "Standings" ? (
+            <Standings />
           ) : (
             "ERROR"
           )}

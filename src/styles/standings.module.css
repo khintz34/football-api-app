@@ -1,0 +1,10 @@
+.standingsContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.logo {
+  width: 5vh;
+  height: 5vh;
+}
