@@ -46,7 +46,7 @@ function Standings() {
           <tr>
             <th>Rank</th>
             <th></th>
-            <th>Name</th>
+            <th>Team</th>
             <th>Points</th>
             <th>Goal Dif</th>
           </tr>

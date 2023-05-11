@@ -8,6 +8,7 @@ import { findLeague, findStandings } from "./api/teams";
 import StatsTeam from "@/components/StatsTeam";
 import FixtureList from "@/components/FixtureList";
 import Standings from "@/components/Standings";
+import Roster from "@/components/Roster";
 
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
@@ -222,7 +223,15 @@ function TeamPage() {
           >
             Standings
           </button>
-          <button className={styles.moreBtn}>Roster</button>
+          <button
+            className={styles.moreBtn}
+            onClick={() => {
+              setStatStatus(`${styles.show}`);
+              toggleDisplayStat("Roster");
+            }}
+          >
+            Players
+          </button>
           <button className={styles.moreBtn}>Transfers</button>
           <button className={styles.moreBtn}>Coaches</button>
         </div>
@@ -235,6 +244,8 @@ function TeamPage() {
             <FixtureList />
           ) : displayStat === "Standings" ? (
             <Standings />
+          ) : displayStat === "Roster" ? (
+            <Roster />
           ) : (
             "ERROR"
           )}
