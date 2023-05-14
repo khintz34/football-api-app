@@ -3,16 +3,35 @@
   flex-direction: column;
   text-align: center;
   margin-top: 2vh;
+  overflow: scroll;
 }
 
 .playerContainer {
   height: 8vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: scroll;
+  gap: 2vw;
 }
 
 .photo {
   height: 8vh;
+}
+
+.tableCol {
+  width: 200vw;
+}
+
+.nameCol {
+  width: 50vw;
+}
+
+.numCol {
+  width: 15vw;
+}
+
+.posCol .nationCol {
+  width: 20vw;
+}
+
+.minsCol {
+  width: 15vw;
 }

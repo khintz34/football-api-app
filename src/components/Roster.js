@@ -15,17 +15,18 @@ function Roster() {
         age: "Age",
         photo: "",
       },
-      statistics: {
-        games: {
-          appearances: 0,
-          position: "Position",
-          minutes: 0,
+      statistics: [
+        {
+          games: {
+            position: "Position",
+            minutes: 0,
+          },
+          goals: {
+            assists: 0,
+            total: 0,
+          },
         },
-        goals: {
-          assists: 0,
-          total: 0,
-        },
-      },
+      ],
     },
   ]);
 
@@ -87,21 +88,51 @@ function Roster() {
 
   return (
     <div className={styles.rosterContainer}>
-      {roster.map((val, index) => {
-        return (
-          <div
-            key={`${val.player.lastname}-${index}-roster`}
-            className={styles.playerContainer}
-          >
-            <p>
-              <img src={val.player.photo} alt="" className={styles.photo} />
-            </p>
-            <p>
-              {val.player.firstname} {val.player.lastname}
-            </p>
-          </div>
-        );
-      })}
+      <table className={styles.tableCol}>
+        <thead>
+          <tr>
+            <th> </th>
+            <th className={styles.nameCol}>Name</th>
+            <th className={styles.numCol}>Age</th>
+            <th className={styles.nationCol}>Nationality</th>
+            <th className={styles.posCol}>Position</th>
+            <th className={styles.minsCol}>Minutes</th>
+            <th className={styles.numCol}>Goals</th>
+            <th className={styles.numCol}>Assists</th>
+          </tr>
+        </thead>
+        <tbody>
+          {roster.map((val, index) => {
+            return (
+              <tr
+                key={`${val.player.lastname}-${index}-roster`}
+                className={styles.playerContainer}
+              >
+                <td>
+                  <img src={val.player.photo} alt="" className={styles.photo} />
+                </td>
+                <td className={styles.nameCol}>
+                  {val.player.firstname} {val.player.lastname}
+                </td>
+                <td className={styles.numCol}>{val.player.age}</td>
+                <td className={styles.nationCol}>{val.player.nationality}</td>
+                <td className={styles.posCol}>
+                  {val.statistics[0].games.position}
+                </td>
+                <td className={styles.minsCol}>
+                  {val.statistics[0].games.minutes}
+                </td>
+                <td className={styles.numCol}>
+                  {val.statistics[0].goals.total}
+                </td>
+                <td className={styles.numCol}>
+                  {val.statistics[0].goals.assists}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
