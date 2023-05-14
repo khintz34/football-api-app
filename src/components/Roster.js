@@ -9,6 +9,8 @@ function Roster() {
     {
       player: {
         name: "Name",
+        firstname: "firstname",
+        lastname: "lastname",
         nationality: "Nationality",
         age: "Age",
         photo: "",
@@ -50,7 +52,7 @@ function Roster() {
       });
     });
 
-    console.log("HoldingAeeay: ", holdingArray);
+    console.log("HoldingArray: ", holdingArray);
     setRoster(holdingArray);
   }
 
@@ -79,12 +81,26 @@ function Roster() {
     callFetches();
   }, []);
 
+  useEffect(() => {
+    console.log(roster, "ROSTER"), [roster];
+  });
+
   return (
-    <div>
+    <div className={styles.rosterContainer}>
       {roster.map((val, index) => {
-        <div key={`${val.player.lastname}-${index}-roster`}>
-          <p>{val.player.lastname}</p>
-        </div>;
+        return (
+          <div
+            key={`${val.player.lastname}-${index}-roster`}
+            className={styles.playerContainer}
+          >
+            <p>
+              <img src={val.player.photo} alt="" className={styles.photo} />
+            </p>
+            <p>
+              {val.player.firstname} {val.player.lastname}
+            </p>
+          </div>
+        );
       })}
     </div>
   );
