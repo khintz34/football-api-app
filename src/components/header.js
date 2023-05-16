@@ -4,11 +4,14 @@ import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useNavbarStore } from "@/stores/navbarStore";
 import { useTeamStore } from "@/stores/teamStore";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const navbarStatus = useNavbarStore((state) => state.navbarStatus);
   const changeStatus = useNavbarStore((state) => state.changeStatus);
   const team = useTeamStore((state) => state.team);
+  const header = useTeamStore((state) => state.header);
+  const changeHeader = useTeamStore((state) => state.changeHeader);
 
   const handleToggle = () => {
     if (navbarStatus === true) {
@@ -21,10 +24,15 @@ const Header = () => {
   const closeMenu = () => {
     changeStatus(false);
   };
+
+  const resetTeamInfo = () => {
+    changeHeader(false);
+  };
+
   return (
     <header className={`${styles.header}`}>
-      <h1>
-        <Link href={"/"}>{team.team.name}</Link>
+      <h1 onClick={resetTeamInfo}>
+        <Link href={"/"}>{header ? team.team.name : "EPL Team Tracker"}</Link>
       </h1>
 
       <div className={styles.keepRight}>
@@ -57,20 +65,20 @@ const Header = () => {
               Home
             </li>
           </Link>
-          <Link href={"/workout"} className=" whiteFont">
+          <Link href={"/"} className=" whiteFont">
             <li
               className={`${styles.headerBtn} ${styles.menuItem}`}
               onClick={closeMenu}
             >
-              My Workout
+              League Standings
             </li>
           </Link>
-          <Link className=" whiteFont" href={"/options"}>
+          <Link className=" whiteFont" href={"/"}>
             <li
               className={`${styles.headerBtn} ${styles.menuItem}`}
               onClick={closeMenu}
             >
-              Options{" "}
+              League Stats
             </li>
           </Link>
         </ul>

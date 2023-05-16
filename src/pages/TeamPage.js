@@ -18,6 +18,8 @@ function TeamPage() {
   const changeStats = useTeamStore((state) => state.changeStats);
   const changeTeamStats = useTeamStore((state) => state.changeTeamStats);
   const teamStats = useTeamStore((state) => state.teamStats);
+  const header = useTeamStore((state) => state.header);
+  const changeHeader = useTeamStore((state) => state.changeHeader);
   const [wins, setWins] = useState(0);
   const [draws, setDraws] = useState(0);
   const [loses, setLoses] = useState(0);
@@ -90,6 +92,10 @@ function TeamPage() {
   useEffect(() => {
     setTotalPoints(wins * 3 + draws);
   }, [wins]);
+
+  useEffect(() => {
+    changeHeader(true);
+  });
 
   // useEffect(() => {
   //   findTeam(teamId);
