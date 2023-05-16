@@ -35,3 +35,9 @@
 .minsCol {
   width: 15vw;
 }
+
+.thead {
+  font-size: larger;
+  font-weight: bolder;
+  border-bottom: 2px solid white;
+}

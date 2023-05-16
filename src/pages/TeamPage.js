@@ -27,58 +27,6 @@ function TeamPage() {
   const [statStatus, setStatStatus] = useState("styles.hide");
   const [displayStat, setDisplayStat] = useState(null);
 
-  function calcCards(data) {
-    let yellow = 0;
-    const yellowArray = Object.entries(data.yellow);
-    yellowArray.map((val) => {
-      yellow += val[1].total;
-    });
-    setYellowCards(yellow);
-
-    let red = 0;
-    const redArray = Object.entries(data.red);
-    redArray.map((val) => {
-      red += val[1].total;
-    });
-    setRedCards(red);
-
-    let formHold = teamStats.form;
-    console.log(formHold);
-    setCurrentForm(formHold.substring(0, 5));
-  }
-
-  function calcGoals(data) {
-    //calc away goals against
-    let againstArray = Object.entries(data.against.minute);
-    let againstMostHold = againstArray[0];
-    let againstLeastHold = againstArray[0];
-
-    for (let i = 0; i < 6; i++) {
-      if (againstArray[i][1].total < againstLeastHold[1].total) {
-        againstLeastHold = againstArray[i];
-      } else if (againstArray[i][1].total > againstMostHold[1].total) {
-        againstMostHold = againstArray[i];
-      }
-    }
-    setAgainstLeast(againstLeastHold);
-    setAgainstMost(againstMostHold);
-
-    //calc home goals against
-    let forArray = Object.entries(data.for.minute);
-    let forMostHold = forArray[0];
-    let forLeastHold = forArray[0];
-
-    for (let i = 0; i < 6; i++) {
-      if (forArray[i][1].total < forLeastHold[1].total) {
-        forLeastHold = forArray[i];
-      } else if (forArray[i][1].total > forMostHold[1].total) {
-        forMostHold = forArray[i];
-      }
-    }
-    setForLeast(forLeastHold);
-    setForMost(forMostHold);
-  }
-
   async function fetchData(id, option) {
     const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
     const url2 = `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${id}`;
@@ -232,8 +180,6 @@ function TeamPage() {
           >
             Players
           </button>
-          <button className={styles.moreBtn}>Transfers</button>
-          <button className={styles.moreBtn}>Coaches</button>
         </div>
         <div className={`${styles.statBox} ${statStatus}`}>
           {displayStat === null ? (

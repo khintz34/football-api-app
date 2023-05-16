@@ -41,19 +41,17 @@ function Roster() {
 
     const results = await Promise.all(promises);
 
-    console.log("promise.all");
-
-    console.log(results);
-
     let holdingArray = [];
     results.map((val) => {
-      console.log(val.response);
       val.response.map((value) => {
         holdingArray.push(value);
       });
     });
 
-    console.log("HoldingArray: ", holdingArray);
+    holdingArray.sort(
+      (a, b) => b.statistics[0].games.minutes - a.statistics[0].games.minutes
+    );
+
     setRoster(holdingArray);
   }
 
@@ -70,7 +68,6 @@ function Roster() {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      console.log(result);
       return result;
     } catch (error) {
       console.error(error);
@@ -78,19 +75,14 @@ function Roster() {
   }
 
   useEffect(() => {
-    // fetchData(teamId, 2022, 1);
     callFetches();
   }, []);
-
-  useEffect(() => {
-    console.log(roster, "ROSTER"), [roster];
-  });
 
   return (
     <div className={styles.rosterContainer}>
       <table className={styles.tableCol}>
         <thead>
-          <tr>
+          <tr className={styles.thead}>
             <th> </th>
             <th className={styles.nameCol}>Name</th>
             <th className={styles.numCol}>Age</th>
@@ -120,13 +112,19 @@ function Roster() {
                   {val.statistics[0].games.position}
                 </td>
                 <td className={styles.minsCol}>
-                  {val.statistics[0].games.minutes}
+                  {val.statistics[0].games.minutes === null
+                    ? 0
+                    : val.statistics[0].games.minutes}
                 </td>
                 <td className={styles.numCol}>
-                  {val.statistics[0].goals.total}
+                  {val.statistics[0].goals.total === null
+                    ? 0
+                    : val.statistics[0].goals.total}
                 </td>
                 <td className={styles.numCol}>
-                  {val.statistics[0].goals.assists}
+                  {val.statistics[0].goals.assists === null
+                    ? 0
+                    : val.statistics[0].goals.assists}
                 </td>
               </tr>
             );
