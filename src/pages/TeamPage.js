@@ -1,5 +1,4 @@
 import { useTeamStore } from "@/stores/teamStore";
-// import { findTeam } from "./api/teams";
 import { useEffect, useState } from "react";
 import styles from "../styles/teamPage.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -97,9 +96,9 @@ function TeamPage() {
     changeHeader(true);
   });
 
-  // useEffect(() => {
-  //   findTeam(teamId);
-  // }, []);
+  useEffect(() => {
+    fetchData(teamId, 1);
+  }, []);
 
   return (
     <div className={`${styles.teamPage}`}>
@@ -117,15 +116,6 @@ function TeamPage() {
       </div>
 
       <div>
-        <button
-          onClick={() => {
-            fetchData(teamId, 1);
-            // findStandings();
-          }}
-          style={{ width: "50vw", height: "5vh" }}
-        >
-          Calc
-        </button>
         <table className={styles.table}>
           <thead>
             <tr>

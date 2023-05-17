@@ -65,7 +65,7 @@ const Header = () => {
               Home
             </li>
           </Link>
-          <Link href={"/"} className=" whiteFont">
+          <Link href={"/leagueStandings"} className=" whiteFont">
             <li
               className={`${styles.headerBtn} ${styles.menuItem}`}
               onClick={closeMenu}
@@ -73,7 +73,7 @@ const Header = () => {
               League Standings
             </li>
           </Link>
-          <Link className=" whiteFont" href={"/"}>
+          <Link className=" whiteFont" href={"/LeagueStats"}>
             <li
               className={`${styles.headerBtn} ${styles.menuItem}`}
               onClick={closeMenu}

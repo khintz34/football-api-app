@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useTeamStore } from "@/stores/teamStore";
 import teamLogo from "../assets/teamLogo.jpg";
 
-function Standings() {
+function Standings(props) {
   const teamId = useTeamStore((state) => state.id);
   const [standings, setStandings] = useState([
     {
