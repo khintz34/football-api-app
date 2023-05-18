@@ -166,12 +166,24 @@ function StatsTeam(props) {
 
       <div>
         <h2>Defence</h2>
-        <div>
-          Goals Allowed:
-          {goalsAgainst.away} (A){""}
-          {goalsAgainst.home}(H)
-          {goalsAgainst.total} (Total)
-        </div>
+        <table className={styles.tableStat}>
+          <caption>Goals Allowed</caption>
+          <thead>
+            <tr>
+              <th>Home</th>
+              <th>Away</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{goalsAgainst.home}</td>
+              <td> {goalsAgainst.away}</td>
+              <td>{goalsAgainst.total}</td>
+            </tr>
+          </tbody>
+        </table>
+
         <div>
           Most Likely Time To Give Up A Goal:
           {againstMost[0]} : {againstMost[1].total} ({againstMost[1].percentage}
@@ -183,13 +195,25 @@ function StatsTeam(props) {
           {againstLeast[1].percentage})
         </div>
         <div>
-          <h3>Offense</h3>
-          <div>
-            Goals Allowed:
-            {goalsFor.away} (A){""}
-            {goalsFor.home}(H)
-            {goalsFor.total} (Total)
-          </div>
+          <h2>Offense</h2>
+          <table className={styles.tableStat}>
+            <caption>Goals Scored</caption>
+            <thead>
+              <tr>
+                <th>Home</th>
+                <th>Away</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{goalsFor.home}</td>
+                <td> {goalsFor.away}</td>
+                <td>{goalsFor.total}</td>
+              </tr>
+            </tbody>
+          </table>
+
           <div>
             Most Likely Time To Score A Goal:
             {forMost[0]} : {forMost[1].total} ({forMost[1].percentage})
