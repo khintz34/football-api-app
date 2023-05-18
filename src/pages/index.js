@@ -46,7 +46,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    // getData();
+    getData();
     changeHeader(false);
   }, []);
   return (
@@ -58,21 +58,25 @@ export default function Home() {
       </Head>
       <Header />
       <main className={`${styles.main}`}>
-        <button onClick={getData}>See Teams</button>
-        {teamList.map((val, index) => {
-          return (
-            <div
-              key={`${val.team.id}-teamList`}
-              onClick={() => {
-                // findTeam(val.id);
-                changeId(val.team.id);
-                changeTeam(val);
-              }}
-            >
-              <Link href={"/TeamPage"}>{val.team.name}</Link>
-            </div>
-          );
-        })}
+        <div className={styles.logoContainer}>
+          {teamList.map((val, index) => {
+            return (
+              <div
+                key={`${val.team.id}-teamList`}
+                onClick={() => {
+                  changeId(val.team.id);
+                  changeTeam(val);
+                }}
+              >
+                <Link href={"/TeamPage"}>
+                  <div className={styles.teamInfo}>
+                    <img src={val.team.logo} alt="" className={styles.logo} />
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </main>
     </>
   );

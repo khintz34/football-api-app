@@ -87,7 +87,7 @@ function StatsTeam(props) {
     setRedCards(red);
 
     let formHold = teamStats.form;
-    setCurrentForm(formHold.substring(0, 5));
+    setCurrentForm(formHold.slice(-5).split("").reverse().join(""));
   }
 
   function calcGoals(data) {
@@ -130,24 +130,42 @@ function StatsTeam(props) {
 
   return (
     <div className={`${styles.statBox}`}>
-      <div>Yellow Cards: {yellowCards}</div>
-      <div>Red Cards: {redCards}</div>
-      <div>Clean Sheets: {cleanSheets}</div>
       <div>
-        Failed to Score: {failedToScoreAway} (A){""}
-        {failedToScoreHome} (H)
-        {failedToScoreHome + failedToScoreAway} (Total)
+        <h2>Team Stats</h2>
+        <table className={styles.tableStat}>
+          <thead>
+            <tr>
+              <th>Yellow Cards</th>
+              <th>Red Cards</th>
+              <th>Clean Sheets</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{yellowCards}</td>
+              <td>{redCards}</td>
+              <td>{cleanSheets}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table className={styles.tableStat}>
+          <thead>
+            <tr>
+              <th>Current Form</th>
+              <th>Most Used Formation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{currentForm}</td>
+              <td>{formation}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div>Form: {currentForm}</div>
-      <div>Most Common Formation: {formation}</div>
+
       <div>
-        Penalty Miss: {penaltyMiss.percentage}({penaltyMiss.total})
-      </div>
-      <div>
-        Penalty Scored: {penaltyMake.percentage}({penaltyMake.total})
-      </div>
-      <div>
-        <h3>Defence</h3>
+        <h2>Defence</h2>
         <div>
           Goals Allowed:
           {goalsAgainst.away} (A){""}
@@ -180,6 +198,17 @@ function StatsTeam(props) {
           <div>
             Least Likely Time To Score A Goal:
             {forLeast[0]} : {forLeast[1].total} ({forLeast[1].percentage})
+          </div>
+          <div>
+            Failed to Score: {failedToScoreAway} (A){""}
+            {failedToScoreHome} (H)
+            {failedToScoreHome + failedToScoreAway} (Total)
+          </div>
+          <div>
+            Penalty Miss: {penaltyMiss.percentage}({penaltyMiss.total})
+          </div>
+          <div>
+            Penalty Scored: {penaltyMake.percentage}({penaltyMake.total})
           </div>
         </div>
       </div>

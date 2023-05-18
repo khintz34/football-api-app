@@ -65,7 +65,7 @@ const Header = () => {
               Home
             </li>
           </Link>
-          <Link href={"/leagueStandings"} className=" whiteFont">
+          <Link href={"/LeagueStandings"} className=" whiteFont">
             <li
               className={`${styles.headerBtn} ${styles.menuItem}`}
               onClick={closeMenu}
