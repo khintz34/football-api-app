@@ -5,3 +5,35 @@
   justify-content: center;
   flex-direction: column;
 }
+
+.leagueStatsDiv {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.statTitle {
+  height: 7vh;
+  padding-top: 1vh;
+  width: 100vw;
+  font-size: 4vh;
+  margin: 2vh 0vh;
+  text-align: center;
+  background-color: white;
+  color: black;
+}
+
+.photo {
+  height: 10vh;
+}
+
+.center {
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 98vw;
+}

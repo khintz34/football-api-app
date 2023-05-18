@@ -13,8 +13,6 @@ function LeagueStats() {
         photo: "",
         name: "playerName",
       },
-    },
-    {
       statistics: [
         {
           team: { name: "teamName" },
@@ -28,12 +26,10 @@ function LeagueStats() {
   const [topRedcards, setTopRedCards] = useState([]);
 
   async function callFetches() {
-    // let array = ["topscorers", "topassists", "topyellowcards", "topredcards"];
-    // const promises = array.map(async (val) => {
-    //   const data = await fetchData(2022, val);
-    //   return data;
-    // });
     fetchData(2022, "topscorers");
+    fetchData(2022, "topassists");
+    fetchData(2022, "topyellowcards");
+    fetchData(2022, "topredcards");
   }
 
   async function fetchData(season, type) {
@@ -50,7 +46,6 @@ function LeagueStats() {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      // console.log(result);
       trimList(result.response, type);
     } catch (error) {
       console.error(error);
@@ -63,8 +58,6 @@ function LeagueStats() {
     for (let i = 0; i < 10; i++) {
       holdingArray.push(array[i]);
     }
-
-    console.log(type, holdingArray);
 
     switch (type) {
       case "topscorers":
@@ -90,11 +83,17 @@ function LeagueStats() {
     <div>
       <Header />
       <div className={styles.leagueStatsMain}>
+        <StatsLeague list={topScorers} title="Most Goals" stat="Goals" />
+        <StatsLeague list={topAssists} title="Most Assists" stat="Assists" />
         <StatsLeague
-          list={topScorers}
-          title="Top Scorers"
-          stat="Goals"
-          search="goals"
+          list={topYellowCards}
+          title="Most Yellow Cards"
+          stat="Yellow Cards"
+        />
+        <StatsLeague
+          list={topRedcards}
+          title="Most Red Cards"
+          stat="Red Cards"
         />
       </div>
     </div>
