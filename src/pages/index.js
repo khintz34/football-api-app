@@ -58,6 +58,7 @@ export default function Home() {
       </Head>
       <Header />
       <main className={`${styles.main}`}>
+        <h2>Choose Your Team</h2>
         <div className={styles.logoContainer}>
           {teamList.map((val, index) => {
             return (
@@ -70,7 +71,11 @@ export default function Home() {
               >
                 <Link href={"/TeamPage"}>
                   <div className={styles.teamInfo}>
-                    <img src={val.team.logo} alt="" className={styles.logo} />
+                    <img
+                      src={val.team.logo}
+                      alt="Team Logo"
+                      className={styles.logo}
+                    />
                   </div>
                 </Link>
               </div>

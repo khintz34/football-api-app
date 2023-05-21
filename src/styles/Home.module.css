@@ -21,7 +21,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   row-gap: 5vw;
-  margin-top: 5vh;
+  margin-top: 3vh;
 }
 
 .logo {
