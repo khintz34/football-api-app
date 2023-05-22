@@ -70,7 +70,6 @@ function TeamPage() {
   }
 
   function toggleDisplayStat(val) {
-    console.log(val);
     if (val === displayStat) {
       setDisplayStat(null);
       setStatStatus(`${styles.hide}`);

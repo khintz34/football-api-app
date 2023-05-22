@@ -53,7 +53,6 @@ function StatsTeam(props) {
       const response = await fetch(url, options);
       const result = await response.json();
       const teamStatsAwait = await changeTeamStats(result.response);
-      console.log(result.response);
       calcCards(result.response.cards);
       calcGoals(result.response.goals);
       setCleanSheets(result.response.clean_sheet.total);
