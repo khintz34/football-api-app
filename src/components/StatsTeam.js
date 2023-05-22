@@ -131,19 +131,19 @@ function StatsTeam(props) {
   return (
     <div className={`${styles.statBox}`}>
       <div>
-        <h2>Team Stats</h2>
+        <h2 className={`${styles.center} ${styles.grey}`}>Team Stats</h2>
         <table className={styles.tableStat}>
           <thead>
             <tr>
-              <th>Yellow Cards</th>
-              <th>Red Cards</th>
+              <th style={{ color: "yellow" }}>Yellow Cards</th>
+              <th style={{ color: "red" }}>Red Cards</th>
               <th>Clean Sheets</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>{yellowCards}</td>
-              <td>{redCards}</td>
+              <td style={{ color: "yellow" }}>{yellowCards}</td>
+              <td style={{ color: "red" }}>{redCards}</td>
               <td>{cleanSheets}</td>
             </tr>
           </tbody>
@@ -165,9 +165,9 @@ function StatsTeam(props) {
       </div>
 
       <div>
-        <h2>Defence</h2>
-        <table className={styles.tableStat}>
-          <caption>Goals Allowed</caption>
+        <h2 className={`${styles.center} ${styles.grey}`}>Defence</h2>
+        <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+          <caption className={styles.caption}>Goals Allowed</caption>
           <thead>
             <tr>
               <th>Home</th>
@@ -184,20 +184,52 @@ function StatsTeam(props) {
           </tbody>
         </table>
 
+        {/* //! comment this out */}
+
+        <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+          <caption className={styles.caption}>
+            Most Likely Time To Give Up A Goal
+          </caption>
+          <thead>
+            <tr>
+              <th>Minutes</th>
+              <th>Goals</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> {againstMost[0]} </td>
+              <td> {againstMost[1].total} </td>
+              <td>{againstMost[1].percentage}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+          <caption className={styles.caption}>
+            Least Likely Time To Give Up A Goal
+          </caption>
+          <thead>
+            <tr>
+              <th>Minutes</th>
+              <th>Goals</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> {againstLeast[0]} </td>
+              <td> {againstLeast[1].total} </td>
+              <td>{againstLeast[1].percentage}</td>
+            </tr>
+          </tbody>
+        </table>
+
         <div>
-          Most Likely Time To Give Up A Goal:
-          {againstMost[0]} : {againstMost[1].total} ({againstMost[1].percentage}
-          )
-        </div>
-        <div>
-          Least Likely Time To Give Up A Goal:
-          {againstLeast[0]} : {againstLeast[1].total} (
-          {againstLeast[1].percentage})
-        </div>
-        <div>
-          <h2>Offense</h2>
-          <table className={styles.tableStat}>
-            <caption>Goals Scored</caption>
+          <h2 className={`${styles.center} ${styles.grey}`}>Offense</h2>
+          <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+            <caption className={styles.caption}>Goals Scored</caption>
             <thead>
               <tr>
                 <th>Home</th>
@@ -214,26 +246,82 @@ function StatsTeam(props) {
             </tbody>
           </table>
 
-          <div>
-            Most Likely Time To Score A Goal:
-            {forMost[0]} : {forMost[1].total} ({forMost[1].percentage})
-          </div>
+          <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+            <caption className={styles.caption}>
+              Most Likely Time To Score A Goal
+            </caption>
+            <thead>
+              <tr>
+                <th>Minutes</th>
+                <th>Goals</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> {forMost[0]} </td>
+                <td> {forMost[1].total} </td>
+                <td>{forMost[1].percentage}</td>
+              </tr>
+            </tbody>
+          </table>
 
-          <div>
-            Least Likely Time To Score A Goal:
-            {forLeast[0]} : {forLeast[1].total} ({forLeast[1].percentage})
-          </div>
-          <div>
-            Failed to Score: {failedToScoreAway} (A){""}
-            {failedToScoreHome} (H)
-            {failedToScoreHome + failedToScoreAway} (Total)
-          </div>
-          <div>
-            Penalty Miss: {penaltyMiss.percentage}({penaltyMiss.total})
-          </div>
-          <div>
-            Penalty Scored: {penaltyMake.percentage}({penaltyMake.total})
-          </div>
+          <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+            <caption className={styles.caption}>
+              Least Likely Time To Score A Goal
+            </caption>
+            <thead>
+              <tr>
+                <th>Minutes</th>
+                <th>Goals</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> {forLeast[0]} </td>
+                <td> {forLeast[1].total} </td>
+                <td>{forLeast[1].percentage}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
+            <caption className={styles.caption}>Failed to Score</caption>
+            <thead>
+              <tr>
+                <th>Away</th>
+                <th>Home</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{failedToScoreAway} </td>
+                <td> {failedToScoreHome}</td>
+                <td> {failedToScoreHome + failedToScoreAway}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table className={styles.tableStat}>
+            <thead>
+              <tr>
+                <th>Penalty Miss</th>
+                <th>Penalty Scored</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {penaltyMiss.percentage}({penaltyMiss.total})
+                </td>
+                <td>
+                  {penaltyMake.percentage}({penaltyMake.total})
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

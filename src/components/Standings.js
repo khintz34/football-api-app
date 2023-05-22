@@ -29,6 +29,7 @@ function Standings(props) {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
+      console.log(result.response);
       setStandings(result.response[0].league.standings[0]);
     } catch (error) {
       console.error(error);
@@ -53,8 +54,12 @@ function Standings(props) {
         </thead>
         <tbody>
           {standings.map((val, index) => {
+            console.log(val);
             return (
-              <tr key={`${val.team.name}-standings-tr`}>
+              <tr
+                key={`${val.team.name}-standings-tr`}
+                className={val.team.id === teamId ? styles.selectedTeam : ""}
+              >
                 <td>{val.rank}</td>
                 <td>
                   <img

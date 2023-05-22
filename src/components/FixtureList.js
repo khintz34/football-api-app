@@ -31,7 +31,6 @@ function FixtureList() {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      console.log(result.response);
 
       let array = result.response;
       array.sort((a, b) =>

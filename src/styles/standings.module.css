@@ -10,3 +10,8 @@
   width: 5vh;
   height: 5vh;
 }
+
+.selectedTeam {
+  background-color: lightgray;
+  color: black;
+}

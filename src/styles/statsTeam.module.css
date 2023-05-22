@@ -85,3 +85,21 @@
   font-size: 2vh;
   margin-bottom: 2vh;
 }
+
+.center {
+  text-align: center;
+}
+
+.grey {
+  background-color: gray;
+}
+
+.caption {
+  font-size: 2.2vh;
+  border-top: 2px solid white;
+  color: aqua;
+}
+
+.tableUnderline {
+  border-bottom: 2px solid white;
+}
