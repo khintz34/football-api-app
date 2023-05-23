@@ -6,6 +6,8 @@
   /* justify-content: center; */
   align-items: center;
   flex-direction: column;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .teamLogo {
@@ -79,6 +81,23 @@
 .moreBtn {
   width: 40vw;
   height: 5vh;
+  font-size: 2vh;
+}
+
+.seasonFormat {
+  width: 40vw;
+  height: 5vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(78, 78, 78);
+  font-size: 2.2vh;
+}
+
+.select {
+  color: rgb(78, 78, 78);
+  background-color: white;
 }
 
 .statBox {

@@ -8,6 +8,7 @@ import StatsTeam from "@/components/StatsTeam";
 import FixtureList from "@/components/FixtureList";
 import Standings from "@/components/Standings";
 import Roster from "@/components/Roster";
+import { seasonList } from "@/assets/seasonList";
 
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
@@ -19,6 +20,8 @@ function TeamPage() {
   const teamStats = useTeamStore((state) => state.teamStats);
   const header = useTeamStore((state) => state.header);
   const changeHeader = useTeamStore((state) => state.changeHeader);
+  const season = useTeamStore((state) => state.season);
+  const changeSeason = useTeamStore((state) => state.changeSeason);
   const [wins, setWins] = useState(0);
   const [draws, setDraws] = useState(0);
   const [loses, setLoses] = useState(0);
@@ -175,22 +178,39 @@ function TeamPage() {
           >
             Players
           </button>
+          <div className={styles.seasonFormat}>
+            <p>Season: </p>
+          </div>
+          <select
+            name="seasonSelect"
+            id="seasonSelect"
+            className={`${styles.moreBtn} ${styles.select}`}
+            onChange={(data) => changeSeason(data)}
+          >
+            {seasonList.reverse().map((val, index) => {
+              return (
+                <option value={val.value} key={`${val.season}-${index}`}>
+                  {val.season}
+                </option>
+              );
+            })}
+          </select>
         </div>
-        <div className={`${styles.statBox} ${statStatus}`}>
-          {displayStat === null ? (
-            ""
-          ) : displayStat === "StatsTeam" ? (
-            <StatsTeam />
-          ) : displayStat === "FixtureList" ? (
-            <FixtureList />
-          ) : displayStat === "Standings" ? (
-            <Standings />
-          ) : displayStat === "Roster" ? (
-            <Roster />
-          ) : (
-            "ERROR"
-          )}
-        </div>
+      </div>
+      <div className={`${styles.statBox} ${statStatus}`}>
+        {displayStat === null ? (
+          ""
+        ) : displayStat === "StatsTeam" ? (
+          <StatsTeam />
+        ) : displayStat === "FixtureList" ? (
+          <FixtureList />
+        ) : displayStat === "Standings" ? (
+          <Standings />
+        ) : displayStat === "Roster" ? (
+          <Roster />
+        ) : (
+          "ERROR"
+        )}
       </div>
     </div>
   );

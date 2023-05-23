@@ -17,6 +17,7 @@ function StatsTeam(props) {
   const [forLeast, setForLeast] = useState([0, { total: 0, percentage: 0 }]);
   const [forMost, setForMost] = useState([0, { total: 0, percentage: 0 }]);
   const changeTeamStats = useTeamStore((state) => state.changeTeamStats);
+  const seasonId = useTeamStore((state) => state.season);
   const teamId = useTeamStore((state) => state.id);
   const [statStatus, setStatStatus] = useState("styles.hide");
   const teamStats = useTeamStore((state) => state.teamStats);
@@ -123,7 +124,7 @@ function StatsTeam(props) {
 
   useEffect(() => {
     if (!statsFound) {
-      findStats(teamId, 2022);
+      findStats(teamId, seasonId);
     }
   }, []);
 
