@@ -6,6 +6,7 @@ import { calculateOverrideValues } from "next/dist/server/font-utils";
 function FixtureList() {
   const teamId = useTeamStore((state) => state.id);
   const teamData = useTeamStore((state) => state.team);
+  const seasonId = useTeamStore((state) => state.season);
   let currentleague = "";
   const [fixtureList, setFixtureList] = useState([
     {
@@ -48,7 +49,7 @@ function FixtureList() {
   }
 
   useEffect(() => {
-    fetchData(teamId, 2022);
+    fetchData(teamId, seasonId);
   }, []);
 
   return (

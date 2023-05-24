@@ -40,7 +40,8 @@ function StatsTeam(props) {
   });
 
   async function findStats(id, season) {
-    const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=${season}&team=${id}`;
+    console.log(seasonId);
+    const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=${seasonId}&team=${id}`;
     const options = {
       method: "GET",
       headers: {
@@ -183,8 +184,6 @@ function StatsTeam(props) {
             </tr>
           </tbody>
         </table>
-
-        {/* //! comment this out */}
 
         <table className={`${styles.tableStat} ${styles.tableUnderline}`}>
           <caption className={styles.caption}>

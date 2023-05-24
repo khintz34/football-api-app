@@ -73,7 +73,10 @@ function TeamPage() {
   }
 
   function toggleDisplayStat(val) {
-    if (val === displayStat) {
+    if (val === "Close") {
+      setDisplayStat(null);
+      setStatStatus(`${styles.hide}`);
+    } else if (val === displayStat) {
       setDisplayStat(null);
       setStatStatus(`${styles.hide}`);
     } else {
@@ -185,7 +188,10 @@ function TeamPage() {
             name="seasonSelect"
             id="seasonSelect"
             className={`${styles.moreBtn} ${styles.select}`}
-            onChange={(data) => changeSeason(data)}
+            onChange={(e) => {
+              changeSeason(e.target.value);
+              toggleDisplayStat("Close");
+            }}
           >
             {seasonList.reverse().map((val, index) => {
               return (

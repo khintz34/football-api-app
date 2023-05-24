@@ -5,6 +5,7 @@ import teamLogo from "../assets/teamLogo.jpg";
 
 function Standings(props) {
   const teamId = useTeamStore((state) => state.id);
+  const seasonId = useTeamStore((state) => state.season);
   const [standings, setStandings] = useState([
     {
       rank: 1,
@@ -36,7 +37,7 @@ function Standings(props) {
   }
 
   useEffect(() => {
-    fetchData(2022);
+    fetchData(seasonId);
   }, []);
 
   return (

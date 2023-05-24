@@ -5,6 +5,7 @@ import teamLogo from "../assets/teamLogo.jpg";
 
 function Roster() {
   const teamId = useTeamStore((state) => state.id);
+  const seasonId = useTeamStore((state) => state.season);
   const [roster, setRoster] = useState([
     {
       player: {
@@ -35,7 +36,7 @@ function Roster() {
   async function callFetches() {
     let array = [1, 2, 3];
     const promises = array.map(async (val) => {
-      const data = await fetchData(teamId, 2022, val);
+      const data = await fetchData(teamId, val);
       return data;
     });
 
@@ -55,8 +56,8 @@ function Roster() {
     setRoster(holdingArray);
   }
 
-  async function fetchData(id, season, page) {
-    const url = `https://api-football-v1.p.rapidapi.com/v3/players?team=${id}&league=39&season=${season}&page=${page}`;
+  async function fetchData(id, page) {
+    const url = `https://api-football-v1.p.rapidapi.com/v3/players?team=${id}&league=39&season=${seasonId}&page=${page}`;
     const options = {
       method: "GET",
       headers: {
