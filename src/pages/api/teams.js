@@ -13,8 +13,6 @@ export async function findTeam(id) {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log("findTeam");
-    console.log(result);
 
     return result;
   } catch (error) {
@@ -36,8 +34,6 @@ export async function findStandings() {
   try {
     const response = await fetch(url, options);
     const result = await response.json();
-    console.log("standings");
-    console.log(result.response);
   } catch (error) {
     console.error(error);
   }

@@ -13,7 +13,6 @@ import { seasonList } from "@/assets/seasonList";
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
   const teamTeam = useTeamStore((state) => state.team);
-  const fullData = useTeamStore((state) => state.fullData);
   const stats = useTeamStore((state) => state.statistics);
   const changeStats = useTeamStore((state) => state.changeStats);
   const changeTeamStats = useTeamStore((state) => state.changeTeamStats);

@@ -2,7 +2,18 @@ import { create } from "zustand";
 
 export const useTeamStore = create((set) => ({
   fullData: null,
-  team: null,
+  team: {
+    team: {
+      founded: "0000",
+      name: "Team Name",
+      logo: "",
+      id: 99,
+    },
+    venue: {
+      name: "Venue Name",
+      city: "Venue City",
+    },
+  },
   id: 20,
   info: null,
   statistics: null,
