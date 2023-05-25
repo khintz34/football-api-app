@@ -192,7 +192,7 @@ function TeamPage() {
               toggleDisplayStat("Close");
             }}
           >
-            {seasonList.reverse().map((val, index) => {
+            {seasonList.map((val, index) => {
               return (
                 <option value={val.value} key={`${val.season}-${index}`}>
                   {val.season}
