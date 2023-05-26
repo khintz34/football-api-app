@@ -29,3 +29,36 @@
 .leagueName {
   text-align: center;
 }
+
+@media (min-width: 1000px) {
+  .fixtureMain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .fixtureContainer {
+    width: 50vw;
+    height: 9vh;
+  }
+
+  .logo {
+    width: 7vh;
+    height: 7vh;
+  }
+
+  .teamName {
+    font-size: 2.7vh;
+  }
+  .winner {
+    font-size: 2.7vh;
+  }
+
+  .loser {
+    font-size: 2.7vh;
+  }
+
+  .draw {
+    font-size: 2.7vh;
+  }
+}

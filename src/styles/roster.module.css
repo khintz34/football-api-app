@@ -41,3 +41,24 @@
   font-weight: bolder;
   border-bottom: 2px solid white;
 }
+
+@media (min-width: 1000px) {
+  .tableCol {
+    width: 100vw;
+  }
+  .nameCol {
+    width: 20vw;
+  }
+
+  .numCol {
+    width: 10vw;
+  }
+
+  .posCol .nationCol {
+    width: 15vw;
+  }
+
+  .minsCol {
+    width: 15vw;
+  }
+}

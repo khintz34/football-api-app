@@ -115,3 +115,13 @@
 .show {
   max-height: 550vh;
 }
+
+@media (min-width: 1000px) {
+  .table {
+    width: 50vw;
+  }
+
+  .statBox {
+    width: 80vw;
+  }
+}

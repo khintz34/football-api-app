@@ -53,7 +53,7 @@ function FixtureList() {
   }, []);
 
   return (
-    <div>
+    <div className={styles.fixtureMain}>
       {fixtureList.map((val, index) => {
         let homeTeam = false;
         let showLeague = false;
@@ -74,7 +74,7 @@ function FixtureList() {
             </div>
             <div className={styles.fixtureContainer}>
               <img src={val.teams.home.logo} alt="" className={styles.logo} />
-              <p>{val.teams.home.name}</p>
+              <p className={styles.teamName}>{val.teams.home.name}</p>
               <p
                 className={
                   val.teams.home.winner && homeTeam
@@ -102,7 +102,7 @@ function FixtureList() {
               >
                 {val.goals.away}
               </p>
-              <p>{val.teams.away.name}</p>
+              <p className={styles.teamName}>{val.teams.away.name}</p>
               <img src={val.teams.away.logo} alt="" className={styles.logo} />
             </div>
           </div>

@@ -42,7 +42,7 @@ function Standings(props) {
 
   return (
     <div className={styles.standingsContainer}>
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Rank</th>
