@@ -103,3 +103,21 @@
 .tableUnderline {
   border-bottom: 2px solid white;
 }
+
+@media (min-width: 1000px) {
+  .statBox {
+    width: 80vw;
+  }
+
+  .tableStat {
+    width: 80vw;
+  }
+
+  .buttonListContainer {
+    width: 80vw;
+  }
+
+  .buttonList {
+    width: 80vw;
+  }
+}
