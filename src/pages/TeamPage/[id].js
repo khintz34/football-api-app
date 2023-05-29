@@ -68,12 +68,12 @@ function TeamPage() {
 
     results.map((val, index) => {
       console.log(index, val);
-      if (index === 1) {
+      if (index === 0) {
         changeStats(val.response);
         setWins(val.response.fixtures.wins.total);
         setDraws(val.response.fixtures.draws.total);
         setLoses(val.response.fixtures.loses.total);
-      } else if (index === 2) {
+      } else if (index === 1) {
         setRankingArray(val.response);
         lookForPos(val.response);
       } else {
