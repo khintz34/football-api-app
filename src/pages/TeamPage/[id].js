@@ -67,6 +67,7 @@ function TeamPage() {
     console.log(results);
 
     results.map((val, index) => {
+      console.log(index, val);
       if (index === 1) {
         changeStats(val.response);
         setWins(val.response.fixtures.wins.total);
@@ -76,10 +77,10 @@ function TeamPage() {
         setRankingArray(val.response);
         lookForPos(val.response);
       } else {
-        console.log("val.respnse: ", val.response[0]);
+        console.log("val.respnse: ", val.response);
         setTeamInfo(val.response);
-        changeId(val.response.team.id);
-        changeTeamName(val.response.team.name);
+        changeId(val.response[0].team.id);
+        changeTeamName(val.response[0].team.name);
       }
     });
   }
