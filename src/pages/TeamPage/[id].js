@@ -46,7 +46,6 @@ function TeamPage() {
       },
     },
   ]);
-  console.log("teamInfo: ", teamInfo);
   const router = useRouter();
   const paramId = router.query.id;
 
@@ -64,10 +63,8 @@ function TeamPage() {
     });
 
     const results = await Promise.all(promises);
-    console.log(results);
 
     results.map((val, index) => {
-      console.log(index, val);
       if (index === 0) {
         changeStats(val.response);
         setWins(val.response.fixtures.wins.total);
@@ -77,7 +74,6 @@ function TeamPage() {
         setRankingArray(val.response);
         lookForPos(val.response);
       } else {
-        console.log("val.respnse: ", val.response);
         setTeamInfo(val.response);
         changeId(val.response[0].team.id);
         changeTeamName(val.response[0].team.name);
@@ -86,10 +82,6 @@ function TeamPage() {
   }
 
   async function fetchData(url) {
-    // const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${paramId}`;
-    // const url2 = `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${paramId}`;
-    // const url3 = `https://api-football-v1.p.rapidapi.com/v3/teams?id=${paramId}`;
-    console.log(url);
     const options = {
       method: "GET",
       headers: {
@@ -102,22 +94,6 @@ function TeamPage() {
       const response = await fetch(url, options);
       const result = await response.json();
       return result;
-      // const response2 = await fetch(url2, options);
-      // const response3 = await fetch(url3, options);
-      // const result2 = await response2.json();
-      // const result3 = await response3.json();
-
-      // changeStats(result.response);
-      // setWins(result.response.fixtures.wins.total);
-      // setDraws(result.response.fixtures.draws.total);
-      // setLoses(result.response.fixtures.loses.total);
-
-      // setRankingArray(result2.response);
-      // lookForPos(result2.response);
-
-      //  setTeamInfo(result3.response);
-      // changeId(result3.response[0].team.id);
-      // changeTeamName(result3.response[0].team.name);
     } catch (error) {
       console.error(error);
     }
