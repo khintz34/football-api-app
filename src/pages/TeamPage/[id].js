@@ -1,17 +1,21 @@
 import { useTeamStore } from "@/stores/teamStore";
 import { useEffect, useState } from "react";
-import styles from "../styles/teamPage.module.css";
+import styles from "../../styles/teamPage.module.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Header from "@/components/header";
-import { findLeague, findStandings } from "./api/teams";
+import { findLeague, findStandings } from "../api/teams";
 import StatsTeam from "@/components/StatsTeam";
 import FixtureList from "@/components/FixtureList";
 import Standings from "@/components/Standings";
 import Roster from "@/components/Roster";
 import { seasonList } from "@/assets/seasonList";
+import { useRouter } from "next/router";
+import { teamLogo } from "../../assets/teamLogo.jpg";
 
 function TeamPage() {
   const teamId = useTeamStore((state) => state.id);
+  const changeId = useTeamStore((state) => state.changeId);
+  const changeTeamName = useTeamStore((state) => state.changeTeamName);
   const teamTeam = useTeamStore((state) => state.team);
   const stats = useTeamStore((state) => state.statistics);
   const changeStats = useTeamStore((state) => state.changeStats);
@@ -29,11 +33,62 @@ function TeamPage() {
   const [rankingArray, setRankingArray] = useState([]);
   const [statStatus, setStatStatus] = useState("styles.hide");
   const [displayStat, setDisplayStat] = useState(null);
+  const [teamInfo, setTeamInfo] = useState([
+    {
+      team: {
+        name: "Team Name",
+        founded: 9999,
+        logo: { teamLogo },
+      },
+      venue: {
+        name: "Venue Name",
+        city: "Venue City",
+      },
+    },
+  ]);
+  console.log("teamInfo: ", teamInfo);
+  const router = useRouter();
+  const paramId = router.query.id;
 
-  async function fetchData(id, option) {
-    const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${id}`;
-    const url2 = `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${id}`;
+  // todo fetch Data running many times overwriting the data. Why??
 
+  async function callFetches() {
+    let array = [
+      `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${paramId}`,
+      `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${paramId}`,
+      `https://api-football-v1.p.rapidapi.com/v3/teams?id=${paramId}`,
+    ];
+    const promises = array.map(async (val) => {
+      const data = await fetchData(val);
+      return data;
+    });
+
+    const results = await Promise.all(promises);
+    console.log(results);
+
+    results.map((val, index) => {
+      if (index === 1) {
+        changeStats(val.response);
+        setWins(val.response.fixtures.wins.total);
+        setDraws(val.response.fixtures.draws.total);
+        setLoses(val.response.fixtures.loses.total);
+      } else if (index === 2) {
+        setRankingArray(val.response);
+        lookForPos(val.response);
+      } else {
+        console.log("val.respnse: ", val.response[0]);
+        setTeamInfo(val.response);
+        changeId(val.response.team.id);
+        changeTeamName(val.response.team.name);
+      }
+    });
+  }
+
+  async function fetchData(url) {
+    // const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=2022&team=${paramId}`;
+    // const url2 = `https://api-football-v1.p.rapidapi.com/v3/standings?season=2022&team=${paramId}`;
+    // const url3 = `https://api-football-v1.p.rapidapi.com/v3/teams?id=${paramId}`;
+    console.log(url);
     const options = {
       method: "GET",
       headers: {
@@ -44,24 +99,28 @@ function TeamPage() {
     };
     try {
       const response = await fetch(url, options);
-      const response2 = await fetch(url2, options);
       const result = await response.json();
-      const result2 = await response2.json();
-      changeStats(result.response);
-      setWins(result.response.fixtures.wins.total);
-      setDraws(result.response.fixtures.draws.total);
-      setLoses(result.response.fixtures.loses.total);
-      setRankingArray(result2.response);
-      lookForPos(result2.response);
       return result;
+      // const response2 = await fetch(url2, options);
+      // const response3 = await fetch(url3, options);
+      // const result2 = await response2.json();
+      // const result3 = await response3.json();
+
+      // changeStats(result.response);
+      // setWins(result.response.fixtures.wins.total);
+      // setDraws(result.response.fixtures.draws.total);
+      // setLoses(result.response.fixtures.loses.total);
+
+      // setRankingArray(result2.response);
+      // lookForPos(result2.response);
+
+      //  setTeamInfo(result3.response);
+      // changeId(result3.response[0].team.id);
+      // changeTeamName(result3.response[0].team.name);
     } catch (error) {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    lookForPos(rankingArray);
-  });
 
   function toggleStatStatus() {
     if (statStatus === "teamPage_show__Sfksl") {
@@ -98,25 +157,27 @@ function TeamPage() {
 
   useEffect(() => {
     changeHeader(true);
-  });
+    lookForPos(rankingArray);
+  }, []);
 
   useEffect(() => {
-    fetchData(teamId, 1);
-  }, []);
+    // fetchData(paramId, 1);
+    callFetches();
+  }, [router]);
 
   return (
     <div className={`${styles.teamPage}`}>
       <Header />
 
       <img
-        src={teamTeam.team.logo}
+        src={teamInfo[0].team.logo}
         alt="Team Logo"
         className={`${styles.teamLogo}`}
       />
       <div className={`${styles.marginBtn} ${styles.infoDiv}`}>
-        <h2 className={styles.infoH2}>{teamTeam.venue.name}</h2>
-        <h2 className={styles.infoH2}>{teamTeam.venue.city}</h2>
-        <h2 className={styles.infoH2}>Founded: {teamTeam.team.founded}</h2>
+        <h2 className={styles.infoH2}>{teamInfo[0].venue.name}</h2>
+        <h2 className={styles.infoH2}>{teamInfo[0].venue.city}</h2>
+        <h2 className={styles.infoH2}>Founded: {teamInfo[0].team.founded}</h2>
       </div>
 
       <div>

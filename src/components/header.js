@@ -12,6 +12,7 @@ const Header = () => {
   const team = useTeamStore((state) => state.team);
   const header = useTeamStore((state) => state.header);
   const changeHeader = useTeamStore((state) => state.changeHeader);
+  const teamName = useTeamStore((state) => state.teamName);
 
   const handleToggle = () => {
     if (navbarStatus === true) {
@@ -32,7 +33,7 @@ const Header = () => {
   return (
     <header className={`${styles.header}`}>
       <h1 onClick={resetTeamInfo}>
-        <Link href={"/"}>{header ? team.team.name : "EPL Team Tracker"}</Link>
+        <Link href={"/"}>{header ? teamName : "EPL Team Tracker"}</Link>
       </h1>
 
       <div className={styles.keepRight}>

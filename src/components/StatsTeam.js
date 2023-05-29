@@ -40,7 +40,6 @@ function StatsTeam(props) {
   });
 
   async function findStats(id, season) {
-    console.log(seasonId);
     const url = `https://api-football-v1.p.rapidapi.com/v3/teams/statistics?league=39&season=${seasonId}&team=${id}`;
     const options = {
       method: "GET",
@@ -54,6 +53,7 @@ function StatsTeam(props) {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
+      console.log(result.response);
       const teamStatsAwait = await changeTeamStats(result.response);
       calcCards(result.response.cards);
       calcGoals(result.response.goals);

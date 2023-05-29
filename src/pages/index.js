@@ -69,7 +69,12 @@ export default function Home() {
                   changeTeam(val);
                 }}
               >
-                <Link href={"/TeamPage"}>
+                <Link
+                  href={{
+                    pathname: "/TeamPage/[id]/",
+                    query: { id: val.team.id },
+                  }}
+                >
                   <div className={styles.teamInfo}>
                     <img
                       src={val.team.logo}

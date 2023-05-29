@@ -20,6 +20,7 @@ export const useTeamStore = create((set) => ({
   teamStats: null,
   header: false,
   season: 2022,
+  teamName: "Team Name",
   changeStats: (data) => set((state) => ({ statistics: data })),
   changeId: (num) => set((state) => ({ id: num })),
   changeTeam: (data) => set((state) => ({ team: data })),
@@ -28,4 +29,5 @@ export const useTeamStore = create((set) => ({
   changeTeamStats: (data) => set((state) => ({ teamStats: data })),
   changeHeader: (data) => set((state) => ({ header: data })),
   changeSeason: (data) => set((state) => ({ season: data })),
+  changeTeamName: (data) => set((state) => ({ teamName: data })),
 }));
